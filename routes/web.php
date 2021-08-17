@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\ComercialController;
+use App\Http\Controllers\FinanceController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OperationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -14,8 +18,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+Route::get('/', [HomeController::class, 'index'])->name('index');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/comercial', [ComercialController::class, 'index'])->name('comercial');
+Route::get('/operation', [OperationController::class, 'index'])->name('operation');
+Route::get('/finance', [FinanceController::class, 'index'])->name('finance');
+

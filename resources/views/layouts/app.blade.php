@@ -27,9 +27,11 @@
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    AS Analitics
+                    {{ config('app.name', 'Laravel') }}
                 </a>
-                <button class="text-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="text-dark navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -40,32 +42,38 @@
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto bg-dark">
                         <!-- Authentication Links -->
                         @guest
-                        @if (Route::has('login'))
-                        <li class="nav-item">
-                            <a class="nav-link white-text" href="{{ route('login') }}">{{ __('Iniciar Sesion') }}</a>
-                        </li>
-                        @endif
-
+                            @if (Route::has('login'))
+                                <li class="nav-item">
+                                    <a class="nav-link white-text"
+                                        href="{{ route('login') }}">{{ __('Iniciar Sesion') }}</a>
+                                </li>
+                            @endif
                         @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }}
-                            </a>
+                            <li class="nav-item"><a class="nav-link text-white" href="comercial">Comercial</a></li>
+                            @if (Auth::user()->user_type_id == 1)
 
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                <li class="nav-item"><a class="nav-link text-white" href="operation">Operaciones</a></li>
+                                <li class="nav-item"><a class="nav-link text-white" href="finance">Finanzas</a></li>
+
+                            @endif
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} ({{ Auth::user()->load('userType')->userType->name }})
                                 </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item bg-danger text-white" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Cerrar Sesion') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                            </li>
                         @endguest
                     </ul>
                 </div>
@@ -74,6 +82,7 @@
 
         <main class="py-4">
             @yield('content')
+
         </main>
 
         <footer class="footer mt-auto py-3">
