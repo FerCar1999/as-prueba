@@ -45,18 +45,26 @@
                     <ul class="navbar-nav ml-auto bg-dark">
                         <!-- Authentication Links -->
                         @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link white-text"
-                                        href="{{ route('login') }}">{{ __('Iniciar Sesion') }}</a>
-                                </li>
-                            @endif
                         @else
-                            <li class="nav-item"><a class="nav-link text-white" href="comercial">Comercial</a></li>
+                            @if (Route::is('comercial'))
+                                <li class="nav-item"><a class="nav-link text-white" href="comercial">Comercial</a></li>
+                            @else
+                                <li class="nav-item"><a class="nav-link" href="comercial">Comercial</a></li>
+                            @endif
                             @if (Auth::user()->user_type_id == 1)
+                                @if (Route::is('operation'))
+                                    <li class="nav-item"><a class="nav-link text-white" href="operation">Operaciones</a>
+                                    </li>
+                                @else
+                                    <li class="nav-item"><a class="nav-link" href="operation">Operaciones</a></li>
+                                @endif
+                                @if (Route::is('finance'))
+                                    <li class="nav-item"><a class="nav-link text-white" href="finance">Finanzas</a></li>
+                                @else
+                                    <li class="nav-item"><a class="nav-link" href="finance">Finanzas</a></li>
+                                @endif
 
-                                <li class="nav-item"><a class="nav-link text-white" href="operation">Operaciones</a></li>
-                                <li class="nav-item"><a class="nav-link text-white" href="finance">Finanzas</a></li>
+
 
                             @endif
                             <li class="nav-item dropdown">
@@ -66,8 +74,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item bg-danger text-white" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                     document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item bg-danger text-white" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                                                 document.getElementById('logout-form').submit();">
                                         {{ __('Cerrar Sesion') }}
                                     </a>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OperationController extends Controller
 {
@@ -23,6 +24,9 @@ class OperationController extends Controller
      */
     public function index()
     {
+        if (Auth::user()->user_type_id!=1) {
+            return redirect()->back();
+        }
         return view('operation');
     }
 }
